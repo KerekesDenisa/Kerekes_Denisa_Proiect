@@ -1,0 +1,80 @@
+﻿@page "/{id:int?}"
+@model Kerekes_Denisa_Proiect.Pages.Chocolates.IndexModel
+
+@{
+    ViewData["Title"] = "Chocolate";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Chocolate[0].ChocolateName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Chocolate[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Chocolate[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Chocolate[0].Expiration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Chocolate[0].ChocolateSupplier.ChocolateSupplierName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Chocolate[0].ChocolateAssortments)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ChocolateD.Chocolates)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.ChocolateID)
+            {
+                selectedRow = "table-success";
+            }
+        <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.ChocolateName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Expiration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChocolateSupplier.ChocolateSupplierName)
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Chocolate[0].ChocolateSupplier.ChocolateSupplierName)
+            </th>
+            <td>
+                @{
+                    foreach (var assortment in item.ChocolateAssortments)
+                    {
+                        @assortment.Assortment.ID @: @assortment.Assortment.AssortmentName <br />
+                    }
+                }
+            </td>
+
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

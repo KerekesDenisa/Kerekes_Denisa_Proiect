@@ -1,0 +1,80 @@
+﻿@page
+@model Kerekes_Denisa_Proiect.Pages.Chocolates.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Chocolate</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Chocolate.ID" />
+            <div class="form-group">
+                <label asp-for="Chocolate.ChocolateName" class="control-label"></label>
+                <input asp-for="Chocolate.ChocolateName" class="form-control" />
+                <span asp-validation-for="Chocolate.ChocolateName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Chocolate.Description" class="control-label"></label>
+                <input asp-for="Chocolate.Description" class="form-control" />
+                <span asp-validation-for="Chocolate.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Chocolate.Price" class="control-label"></label>
+                <input asp-for="Chocolate.Price" class="form-control" />
+                <span asp-validation-for="Chocolate.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Chocolate.Expiration" class="control-label"></label>
+                <input asp-for="Chocolate.Expiration" class="form-control" />
+                <span asp-validation-for="Chocolate.Expiration" class="textdanger"></span>
+            </div>
+            <label asp-for="Chocolate.ChocolateSupplierID" class="control-label">ChocolateSupplier Name</label>
+            <select asp-for="Chocolate.ChocolateSupplierID" class="form-control" asp-items="ViewBag.ChocolateSupplierID">
+            </select>
+            <span asp-validation-for="Chocolate.ChocolateSupplierID" class="text-danger"></span>
+            <div class="form-group">
+                <div class="table">
+                    <table>
+                        <tr>
+                            @{
+                                int cnt = 0;
+                                foreach (var cat in Model.AssignedAssortmentDataList)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                    @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedAssortments"
+                                               value="@cat.AssortmentID"
+                                               @(Html.Raw(cat.Assigned ? "checked=\"checked\"" : "")) />
+                                        @cat.AssortmentID @: @cat.Name
+                                    @:</td>
+                                }
+                            @:</tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
